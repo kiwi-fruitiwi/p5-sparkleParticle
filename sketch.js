@@ -12,6 +12,8 @@ let font
 let instructions  /* div for instructions */
 let DEBUG_MSG =`starting!`
 
+let particles = []
+
 function preload() {
     font = loadFont('data/consola.ttf')
 }
@@ -29,8 +31,12 @@ function setup() {
     instructions = select('#ins')
     instructions.html(`<pre>
         [1,2,3,4,5] → no function ✨
-        z → freeze sketch</pre>`)
+        z → freeze sketch
+        </pre>`)
 
+    for (let i=0; i<50; i++) {
+        particles.push(new SparkleParticle(random(width), random(height)))
+    }
 }
 
 
@@ -40,6 +46,10 @@ function draw() {
     stroke(0, 0, 100)
 
     displayDebugCorner()
+    for (let p of particles) {
+        p.update()
+        p.show()
+    }
 }
 
 
