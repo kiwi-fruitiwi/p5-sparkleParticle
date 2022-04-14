@@ -13,6 +13,7 @@ let instructions  /* div for instructions */
 let DEBUG_MSG =`starting!`
 
 let particles = []
+let θ
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -20,8 +21,8 @@ function preload() {
 
 
 function setup() {
-    let cnv = createCanvas(600, 300)
-    cnv.parent('#canvas')
+    let canvas = createCanvas(600, 300)
+    canvas.parent('#canvas')
 
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
@@ -34,22 +35,68 @@ function setup() {
         z → freeze sketch
         </pre>`)
 
-    for (let i=0; i<50; i++) {
-        particles.push(new SparkleParticle(random(width), random(height)))
-    }
+    // for (let i=0; i<50; i++)
+    //     particles.push(new SparkleParticle(random(width), random(height)))
+
+    /* initialize variables for testing demo */
+    testSetup()
 }
 
 
 function draw() {    
     background(234, 34, 24)
-    fill(0, 0, 100, 70)
-    stroke(0, 0, 100)
+    // fill(0, 0, 100, 70)
+    // stroke(0, 0, 100)
 
     displayDebugCorner()
-    for (let p of particles) {
-        p.update()
-        p.show()
-    }
+    // for (let p of particles) {
+    //     p.update()
+    //     p.show()
+    // }
+
+    test()
+}
+
+
+function testSetup() {
+    θ = 0
+}
+
+
+function test() {
+    stroke(0, 0, 100, 100)
+    fill(0, 0, 100, 10)
+    strokeWeight(2)
+
+    mouseX = constrain(mouseX, 0, width)
+    mouseY = constrain(mouseY, 0, width)
+
+    let s = map(mouseY, 0, height, 0, 100)
+    let r = map(mouseX, 0, width, 0, s/sqrt(2))
+    let d = sqrt(2)*r /* the diagonal formed with θ=45º */
+    DEBUG_MSG = `s:${s.toFixed(2)} r:${r.toFixed(2)}`
+    translate(width/2, height/2)
+    rotate(θ)
+    strokeJoin(ROUND)
+    beginShape() /* starting at θ=0 or (s,0) */
+    vertex(s, 0)
+    vertex(d, d)
+    vertex(0, s)
+
+    vertex(0, s)
+    vertex(-d, d)
+    vertex(-s, 0)
+
+    vertex(-s, 0)
+    vertex(-d, -d)
+    vertex(0, -s)
+
+    vertex(0, -s)
+    vertex(d, -d)
+    vertex(s, 0)
+    endShape()
+
+    θ += 0.01
 }
 
 
