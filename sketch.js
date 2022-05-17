@@ -35,8 +35,8 @@ function setup() {
         z → freeze sketch
         </pre>`)
 
-    // for (let i=0; i<50; i++)
-    //     particles.push(new SparkleParticle(random(width), random(height)))
+    for (let i=0; i<50; i++)
+        particles.push(new SparkleParticle(random(width), random(height)))
 
     /* initialize variables for testing demo */
     testSetup()
@@ -49,10 +49,11 @@ function draw() {
     // stroke(0, 0, 100)
 
     displayDebugCorner()
-    // for (let p of particles) {
-    //     p.update()
-    //     p.show()
-    // }
+    for (let p of particles) {
+        p.wrap()
+        p.update()
+        p.show()
+    }
 
     test()
 }

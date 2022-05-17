@@ -62,7 +62,7 @@ class Particle {
         this.pos.add(this.vel)
         this.vel.add(this.acc)
         this.vel.limit(this.maxspeed)
-        this.vel.mult(0.995) // friction
+        // this.vel.mult(0.995) // friction
         this.acc.mult(0)
 
         this.lifetime -= random(0.1, 0.6)
@@ -71,10 +71,18 @@ class Particle {
 
     show() {
         stroke(this.hue, 100, 100)
-        fill(this.hue, 100, 100, this.lifetime)
+        // fill(this.hue, 100, 100, this.lifetime)
+        fill(this.hue, 100, 100, 10)
 
+        push()
+        translate(this.pos.x, this.pos.y)
+        for (let i=0; i<10; i++) {
+            ellipse(0, 6, 4, 16)
+            rotate(PI/5)
+        }
+        pop()
         /* TODO add .png texture later */
-        circle(this.pos.x, this.pos.y, this.r*2)
+        // circle(this.pos.x, this.pos.y, this.r*2)
         // fill(0, 0, 100)
     }
 }
